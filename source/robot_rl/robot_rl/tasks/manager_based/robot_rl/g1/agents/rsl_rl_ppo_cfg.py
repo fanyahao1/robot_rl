@@ -41,11 +41,15 @@ class CustomPPOActorCriticCfg:
 
 @configclass
 class PPORunnerCfg(RslRlOnPolicyRunnerCfg):
+    class_name = "OnPolicyRunner"
     num_steps_per_env = 24
     max_iterations = 2000
     save_interval = 200
     experiment_name = "g1"
     empirical_normalization = False
+    # Observation groups for rsl-rl 3.x compatibility
+    # Maps observation set names to lists of observation group names from the environment
+    obs_groups: dict = {"policy": ["policy"]}
     policy = RslRlPpoActorCriticCfg(
         init_noise_std=1.0,
         actor_hidden_dims=[512, 256, 128],
@@ -76,6 +80,8 @@ class PPOFinetuneRunnerCfg(RslRlOnPolicyRunnerCfg):
     save_interval = 200
     experiment_name = "g1"
     empirical_normalization = False
+    # Observation groups for rsl-rl 3.x compatibility
+    obs_groups: dict = {"policy": ["policy"]}
     policy = RslRlPpoActorCriticCfg(
         init_noise_std=1.0,
         actor_hidden_dims=[512, 256, 128],

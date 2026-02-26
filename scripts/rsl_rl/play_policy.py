@@ -200,8 +200,7 @@ def main():
     from isaaclab.envs import DirectMARLEnv, multi_agent_to_single_agent
     from isaaclab.utils.dict import print_dict
     from isaaclab_rl.rsl_rl import (
-        RslRlBaseRunnerCfg,
-        RslRlVecEnvWrapper,
+        RslRlOnPolicyRunnerCfg,
         export_policy_as_jit,
         export_policy_as_onnx,
     )
@@ -211,6 +210,7 @@ def main():
 
 
     from rsl_rl.runners import OnPolicyRunner,DistillationRunner
+    from robot_rl.network.vec_env_wrapper import TensorDictVecEnvWrapper as RslRlVecEnvWrapper
 
 
     print("[DEBUG] Modules imported successfully")
@@ -230,7 +230,7 @@ def main():
         env_cfg.commands.base_velocity.ranges.lin_vel_y = (args_cli.sim_speed[1], args_cli.sim_speed[1])
         env_cfg.commands.base_velocity.ranges.ang_vel_z = (args_cli.sim_speed[2], args_cli.sim_speed[2])
 
-    agent_cfg: RslRlBaseRunnerCfg = cli_args.parse_rsl_rl_cfg(args_cli.task, args_cli)
+    agent_cfg: RslRlOnPolicyRunnerCfg = cli_args.parse_rsl_rl_cfg(args_cli.task, args_cli)
     print("[DEBUG] Configurations parsed")
 
     # specify directory for logging experiments

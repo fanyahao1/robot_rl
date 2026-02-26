@@ -175,10 +175,11 @@ def main():
     from isaaclab.utils.dict import print_dict
     from isaaclab.utils.io import dump_pickle, dump_yaml
     import omni
-    from isaaclab_rl.rsl_rl import RslRlBaseRunnerCfg, RslRlVecEnvWrapper
+    from isaaclab_rl.rsl_rl import RslRlOnPolicyRunnerCfg
     from isaaclab_tasks.utils.hydra import hydra_task_config
 
     import robot_rl.tasks
+    from robot_rl.network.vec_env_wrapper import TensorDictVecEnvWrapper as RslRlVecEnvWrapper
 
     from rsl_rl.runners import OnPolicyRunner, DistillationRunner
 
@@ -189,7 +190,7 @@ def main():
     torch.backends.cudnn.benchmark = False
 
     @hydra_task_config(args_cli.task, args_cli.agent)
-    def train(env_cfg: ManagerBasedRLEnvCfg | DirectRLEnvCfg | DirectMARLEnvCfg, agent_cfg: RslRlBaseRunnerCfg):
+    def train(env_cfg: ManagerBasedRLEnvCfg | DirectRLEnvCfg | DirectMARLEnvCfg, agent_cfg: RslRlOnPolicyRunnerCfg):
         """Train with RSL-RL agent."""
         # Override configurations with non-hydra CLI arguments
         agent_cfg = cli_args.update_rsl_rl_cfg(agent_cfg, args_cli)
